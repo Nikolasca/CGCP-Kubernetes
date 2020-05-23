@@ -18,7 +18,7 @@ spec:
   selector:
     app: guayaba
   ports:
-    - port: 80 # Default port for image
+    - port: 3000 # Default port for image
       nodePort: 31001
   type: NodePort
 
