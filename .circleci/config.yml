@@ -1,14 +1,14 @@
 version: 2
 jobs:
     
-  deploy_to_staging:
+  dev:
     docker:
       - image: google/cloud-sdk
     environment:
       - PROJECT_NAME: "ParcialInfra"
       - GOOGLE_PROJECT_ID: "parcialinfra"
       - GOOGLE_COMPUTE_ZONE: "us-central1-c	"
-      - GOOGLE_CLUSTER_NAME: "cluster-infra"
+      - GOOGLE_CLUSTER_NAME: "dev"
     steps:
       - checkout
       - run: 
@@ -27,12 +27,50 @@ jobs:
           command: |
             kubectl delete all --all
             kubectl apply -f ${HOME}/project/deployment.yaml
-            kubectl rollout status deployment/${PROJECT_NAME}
+            kubectl apply -f ${HOME}/project/service.yaml
+            kubectl apply -f ${HOME}/project/ingress.yaml
+  Produ:
+    docker:
+      - image: google/cloud-sdk
+    environment:
+      - PROJECT_NAME: "Parcial-Infra"
+      - GOOGLE_PROJECT_ID: "parcial-infra"
+      - GOOGLE_COMPUTE_ZONE: "us-central1-c"
+      - GOOGLE_CLUSTER_NAME: "produ"
+    steps:
+      - checkout
+      - run: 
+          name: Setup Google Cloud SDK
+          command: |
+            apt-get install -qq -y gettext
+            echo $GCLOUD_SERVICE_KEY > ${HOME}/gcloud-service-key.json
+            gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
+            gcloud --quiet config set project ${GOOGLE_PROJECT_ID}
+            gcloud --quiet config set compute/zone ${GOOGLE_COMPUTE_ZONE}	
+            gcloud --quiet container clusters get-credentials ${GOOGLE_CLUSTER_NAME}  
+      - setup_remote_docker
+      - run: 
+          name: Deploy to Kubernetes
+          command: |
+            kubectl delete all --all
+            kubectl apply -f ${HOME}/project/deployment.yaml
+            kubectl apply -f ${HOME}/project/service.yaml
+            kubectl apply -f ${HOME}/project/ingress.yaml      
 workflows:
   version: 2
-  build_test_deploy:
+  build:
     jobs:
-      - deploy_to_staging:
+      - Dev:
           filters:
             branches:
               only: master
+      - A-Manual:
+          type: approval
+          requires:
+            - Development
+      - Produ:
+          requires:
+            - A-Manual
+          filters:
+            branches:
+              only: master    
