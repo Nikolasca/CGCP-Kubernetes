@@ -1,13 +1,24 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: test-ingress
+  name: example-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/add-base-url: "true"
 spec:
   rules:
-
   - http:
       paths:
-      - path: /app2
-        backend:
-          serviceName: appweb2
-          servicePort: 8080
+        - path: /
+          backend:
+            serviceName: apple-service
+            servicePort: 80
+        - path: /apple
+          backend:
+            serviceName: apple-service
+            servicePort: 80
+        - path: /guayaba
+          backend:
+            serviceName: guayaba-service
+            servicePort: 80
