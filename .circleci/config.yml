@@ -19,7 +19,7 @@ jobs:
             gcloud auth activate-service-account --key-file=${HOME}/gcloud-service-key.json
             gcloud --quiet config set project parcialinfra
             gcloud --quiet config set compute/zone us-central1-c	
-            gcloud --quiet container clusters get-credentials cluster-infra	
+            gcloud --quiet container clusters get-credentials dev	
           
       - setup_remote_docker
       - run: 
