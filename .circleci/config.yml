@@ -25,7 +25,7 @@ jobs:
       - run: 
           name: Deploy to Kubernetes
           command: |
-            kubectl apply -f ${HOME}/project/deployment.yml
+            kubectl apply -f ${HOME}/deployment.yaml
             kubectl rollout status deployment/${PROJECT_NAME}
 workflows:
   version: 2
