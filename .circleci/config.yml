@@ -67,7 +67,7 @@ workflows:
       - A-Manual:
           type: approval
           requires:
-            - Development
+            - Dev
       - Produ:
           requires:
             - A-Manual
