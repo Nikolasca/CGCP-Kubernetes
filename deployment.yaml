@@ -36,7 +36,7 @@ spec:
     spec:
       containers:
       - name: guayaba
-        image: sockshead/react-img:app2
+        image: nginx:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
