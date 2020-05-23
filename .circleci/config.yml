@@ -33,8 +33,8 @@ jobs:
     docker:
       - image: google/cloud-sdk
     environment:
-      - PROJECT_NAME: "Parcial-Infra"
-      - GOOGLE_PROJECT_ID: "parcial-infra"
+      - PROJECT_NAME: "ParcialInfra"
+      - GOOGLE_PROJECT_ID: "parcialinfra"
       - GOOGLE_COMPUTE_ZONE: "us-central1-c"
       - GOOGLE_CLUSTER_NAME: "produ"
     steps:
