@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: apple
-        image: sockshead/react-img:app1
+        image: nikcarp/react-app:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
