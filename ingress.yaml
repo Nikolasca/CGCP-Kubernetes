@@ -21,4 +21,4 @@ spec:
         - path: /guayaba
           backend:
             serviceName: guayaba-service
-            servicePort: 80
+            servicePort: 3000
