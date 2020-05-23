@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: appweb1
-        image: nginx:1.7.9
+        image: nginx:latest
         imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 80
